@@ -1,0 +1,58 @@
+{
+  "name": "serverlessexample",
+  "version": "1.1.0",
+  "description": "A Node.js starter for the Serverless Framework",
+  "author": "SHL",
+  "license": "MIT",
+  "scripts": {
+    "offline": "serverless offline start --noAuth --stage dev --log",
+    "eslint-check": "eslint --print-config . | eslint-config-prettier-check",
+    "lint": "eslint ./src/**/*.js",
+    "precommit": "lint-staged",
+    "pretest": "npm run lint",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "debug": "export SLS_DEBUG=* && node --inspect serverless offline -s dev"
+  },
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-flow": "^6.23.0",
+    "eslint": "^5.5.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-loader": "^2.1.0",
+    "eslint-plugin-flowtype": "^2.50.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "husky": "^1.0.0-rc.14",
+    "jest": "^23.6.0",
+    "lint-staged": "^7.2.2",
+    "prettier": "^1.14.2",
+    "prettier-eslint": "^8.8.2",
+    "serverless": "^1.31",
+    "serverless-domain-manager": "^2.6.5",
+    "serverless-jest-plugin": "^0.1.6",
+    "serverless-offline": "^3.25.11",
+    "serverless-webpack": "^5.2.0",
+    "webpack": "^4.18.0",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.12.0",
+    "serverless-offline": "^3.8.3"
+  },
+  "lint-staged": {
+    "./src/**/*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run test && npm run build",
+      "pre-push": "npm test"
+    }
+  }
+}

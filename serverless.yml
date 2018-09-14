@@ -1,0 +1,65 @@
+service: serverlessexample   # NOTE: update this with your service name
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, self:custom.defaultStage}
+  profile: ${self:custom.profiles.${self:provider.stage}}
+  region: ${opt:region, 'us-east-1'}
+  environment:
+    SERVICE_NAME: ${self:service}
+  #iamRoleStatements:
+custom:
+  defaultStage: dev
+  profiles:
+      dev: devProfile
+      prod: devProfile
+  stage: ${opt:stage, self:custom.defaultStage}
+  domains:
+    prod: ${file(./env.yml):PROD_URL}
+    staging: ${file(./env.yml):STAGING_URL}
+    dev: ${file(./env.yml):DEV_URL}
+  customDomain:
+      basePath:  ${self:custom.stage}
+      domainName: ${self:custom.domains.${self:custom.stage}}
+      stage: ${self:custom.stage} 
+      createRoute53Record: true
+  webpack:
+      webpackConfig: 'webpack.config.js'   
+      includeModules:   # Node modules configuration for packaging
+        forceExclude:
+          - aws-sdk
+      packager: 'npm'  
+  serverless-offline:
+    babelOptions:
+      presets: ["env", "flow"]
+  jest:
+      # You can pass jest options here
+      # See details here: https://facebook.github.io/jest/docs/configuration.html
+      # For instance, uncomment next line to enable code coverage
+      collectCoverage: true
+  #documentation:
+  #  version: '1'
+  #  summary: 'Serverless Example API'
+  #  description: 'A serverless example API documented with OpenAPI specification'
+    #see documentation for creating swagger yml / json for this service
+#resources:
+ # Resources:
+    #any resources listed here
+package:
+  individually: true
+#  exclude:
+ #    - node_modules/**
+functions:
+  hello:
+    handler: src/services/handler.hello
+    events:
+      - http:
+          path: hello
+          method: get
+          cors: true
+
+plugins:
+  - serverless-webpack
+  - serverless-jest-plugin
+  - serverless-domain-manager
+  - serverless-offline
