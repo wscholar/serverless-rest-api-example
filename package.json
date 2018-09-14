@@ -12,7 +12,8 @@
     "pretest": "npm run lint",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "debug": "export SLS_DEBUG=* && node --inspect serverless offline -s dev"
+    "debug": "export SLS_DEBUG=* && node --inspect serverless offline -s dev",
+    "build": "serverless package"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
