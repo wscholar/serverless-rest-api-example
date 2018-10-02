@@ -8,15 +8,13 @@ This is an example serverless rest api example that uses aws dynamodb and dynamo
 Download node at [nodejs.org](http://nodejs.org) and install it, if you haven't already.
 
 ```sh
-npm install serverless-rest-api-example --save
+npm install
 ```
 
-This package is provided in these module formats:
-
-- CommonJS
-
-
-
+```sh
+npm run offline
+```
+  
 
 ## Dependencies
 
