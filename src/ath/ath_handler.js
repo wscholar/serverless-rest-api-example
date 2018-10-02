@@ -1,3 +1,5 @@
+'use strict';
+//TODO update logging and write tests
 const jwt = require('jsonwebtoken');
 
 const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID;
